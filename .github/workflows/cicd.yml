@@ -4,7 +4,7 @@ on:
     branches:
       - main
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Downlaod code on machine
@@ -17,6 +17,22 @@ jobs:
         run: npm ci
       - name: Run Tests
         run: npm run test
+
+  deploy:
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Downlaod code on machine
+        uses: actions/checkout@v6
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Install Dependenceis 
+        run: npm ci
+      - name: Deploy
+        run: echo "Deploying ....."
+
 
 
 
